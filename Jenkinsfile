@@ -35,11 +35,11 @@ pipeline {
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
             chmod +x kubectl
             
-            kubectl apply -f ${K8S_DIR}/namespace.yaml
-            kubectl apply -f ${K8S_DIR}/deployment.yaml
-            kubectl apply -f ${K8S_DIR}/service.yaml
+            ./kubectl apply -f k8s/namespace.yaml
+            ./kubectl apply -f k8s/deployment.yaml
+            ./kubectl apply -f k8s/service.yaml
 
-            kubectl rollout status deployment/snapcart-deployment \
+            ./kubectl rollout status deployment/snapcart-deployment \
                 -n ${NAMESPACE} --timeout=120s
         '''
             }
