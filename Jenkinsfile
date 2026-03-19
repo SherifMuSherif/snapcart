@@ -37,7 +37,7 @@ pipeline {
 
                 # 3. Use the MATCHING variable name ($TEMP_KUBECONFIG)
                 # This now correctly reads the secret file and fixes the IP
-                sed "s/127.0.0.1/host.docker.internal/g" $TEMP_KUBECONFIG > ./kubeconfig.modified
+                sed "s/127.0.0.1/kubernetes.docker.internal/g" $TEMP_KUBECONFIG > ./kubeconfig.modified
 
                 # 4. Point kubectl to the NEW modified file
                 export KUBECONFIG=./kubeconfig.modified
