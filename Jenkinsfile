@@ -30,7 +30,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh """
+                sh '''
             # Download kubectl
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
             chmod +x kubectl
@@ -41,7 +41,7 @@ pipeline {
 
             kubectl rollout status deployment/snapcart-deployment \
                 -n ${NAMESPACE} --timeout=120s
-        """
+        '''
             }
         }
     }
