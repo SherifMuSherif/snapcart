@@ -25,7 +25,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <p>SnapCart &copy; 2025 — Running on Kubernetes</p>
+        <p>SnapCart &copy; 2026 — Running on Kubernetes</p>
       </footer>
     </div>
   );
