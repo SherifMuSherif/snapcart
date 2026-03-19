@@ -65,7 +65,5 @@ pipeline {
         }
     }
 
-    post {
-    // runs after all stages
-    }
+   
 }
