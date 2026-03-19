@@ -26,25 +26,27 @@ pipeline {
             }
         }
 
-       
-
         stage('Deploy to Kubernetes') {
             steps {
-                sh '''
-            # Download kubectl
-            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-            chmod +x kubectl
-            
-            ./kubectl apply -f k8s/namespace.yaml
-            ./kubectl apply -f k8s/deployment.yaml
-            ./kubectl apply -f k8s/service.yaml
+                withCredentials([file(credentialsId: 'kubeconfig-file', variable: 'KUBECONFIG')]) {
+                    sh '''
+                # Download kubectl
+                curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                chmod +x kubectl
 
-            ./kubectl rollout status deployment/snapcart-deployment \
-                -n ${NAMESPACE} --timeout=120s
-        '''
+                # Point kubectl to the credential file provided by Jenkins
+                export KUBECONFIG=${KUBECONFIG}
+
+                ./kubectl apply -f k8s/namespace.yaml
+                ./kubectl apply -f k8s/deployment.yaml
+                ./kubectl apply -f k8s/service.yaml
+
+                ./kubectl rollout status deployment/snapcart-deployment \
+                    -n ${NAMESPACE} --timeout=120s
+            '''
+                }
             }
         }
     }
 
-   
 }
