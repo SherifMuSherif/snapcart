@@ -34,7 +34,7 @@ pipeline {
             docker run -d --name snapcart-test -p 3001:3000 ${IMAGE_NAME}:${IMAGE_TAG}
 
             # Wait for Next.js to start
-            sleep 8
+            sleep 20
 
             # Check the health endpoint returns 200
             STATUS=\$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3001/api/health)
